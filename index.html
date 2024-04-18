@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dampers</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+</head>
+<style>
+    .toggle-label {
+        position: relative;
+        display: inline-block;
+        width: 15px;
+        /* Ancho del cuadro */
+        height: 15px;
+        /* Altura del cuadro */
+        margin-top: 5px;
+        border: 1px solid #808080;
+        cursor: pointer;
+    }
+
+    .switch-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 253, 253);
+        transition: background 150ms linear;
+    }
+
+    .switch-toggle {
+        position: absolute;
+        top: 50%;
+        /* Centrar verticalmente */
+        left: 50%;
+        /* Centrar horizontalmente */
+        transform: translate(-50%, -50%);
+        /* Centrar el contenido */
+        color: #000000;
+        font-size: 1em;
+        /* Tamaño de la fuente ajustado */
+    }
+
+    .switch-toggle.checked {
+
+        /* Mueve el toggle hacia la derecha cuando está checked */
+    }
+
+    .textbox-lines {
+  width: 100%;
+  max-width: 100%;
+  font-size: 19px;
+  border: none;
+  background-attachment: local;
+  background-image:
+    linear-gradient(to right, #FFF, #FFF 10px, transparent 10px),
+    linear-gradient(to left, #FFF, #FFF 10px, transparent 10px),
+    repeating-linear-gradient(
+      #FFF,
+      #FFF 36px,
+      #CCC 36px,
+      #CCC 38px
+    );
+  line-height: 38px;
+  padding: 6.333px 10px;
+  resize: none;
+}
+
+.textbox-lines:focus-visible {
+    outline: none;
+}
+
+
+
+    .car {
+        position: relative;
+    }
+
+    .floating-box {
+        position: absolute;
+        background-color: white;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .box-top-left {
+        top: 90px;
+        left: 50px;
+    }
+
+    p {
+        margin-bottom: 0 !important;
+    }
+
+    #auto label {
+        font-size: 12px !important;
+    }
+
+    .box-top-center {
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .box-top-right {
+        top: 90px;
+        right: 60px;
+    }
+
+    .box-left-top {
+        top: 290px;
+        left: -30px;
+    }
+
+    .box-right-top {
+        top: 290px;
+        right: 0px;
+    }
+
+    .box-bottom-left {
+        bottom: -20px;
+        left: 10px;
+    }
+
+    .box-bottom-center {
+        bottom: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .box-bottom-right {
+        bottom: 40px;
+        right: 10px;
+    }
+
+    /* Estilos para la lista de verificación de frenos */
+    .bg-green {
+        background-color: rgba(0, 128, 0, 0.514);
+        width: 20px;
+        height: 20px;
+    }
+
+    .bg-yellow {
+        background-color: rgba(255, 255, 0, 0.527);
+        width: 20px;
+        height: 20px;
+    }
+
+    .bg-red {
+        background-color: rgba(255, 0, 0, 0.507);
+        width: 20px;
+        height: 20px;
+    }
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+
+        }
+    }
+
+    main {
+        width: 20cm;
+        height: 29.7cm;
+        margin: 1cm auto;
+    }
+
+    .fs-6 {
+        font-size: 0.875rem !important;
+    }
+
+    .fs-7{
+        font-size: 12.4px;
+    }
+    .imglogo{
+        margin-top: -20px;
+    margin-left: 110px;
+    height: 60px;
+    width: 330px;
+}
+    
+</style>
+
+<body>
+    <main>
+
+        <header>
+            <div class="container d-flex justify-content-around">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="./img/logo.png" alt="logo" class="img-fluid imglogo" />
+                </div>
+                <div class=" ">
+                    <h1 class="text-center fs-6">MANTENIMIENTO VEHICULAR</h1>
+                    <h4 class="text-center fs-6">Hoja de Control de Servicio</h4>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Contenido dividido en dos columnas -->
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-center gap-2">
+                <!-- Fecha -->
+                <div class="d-flex align-items-center gap-1">
+                    <p class="fs-6">FECHA</p>
+                    <div class="d-flex align-items-center">
+                        <input type="date" class="" id="anio" placeholder="Año" style="width: 90%;">
+                    </div>
+                </div>
+
+                <!-- Kilometraje -->
+                <div class="d-flex align-items-center gap-1">
+                    <p>KM</p>
+                    <div class=" d-flex align-items-center">
+                        <input type="text" class="" id="kilometraje">
+                    </div>
+                </div>
+
+                <!-- Nafta -->
+                <div class="d-flex align-items-center gap-1">
+                    <p class="fs-6">NAFTA</p>
+                    <div class=" d-flex">
+                        <select class="" id="nafta">
+                            <option value="1/4" class="fs-6">1/4</option>
+                            <option value="1/2" class="fs-6">1/2</option>
+                            <option value="3/4" class="fs-6">3/4</option>
+                            <option value="4/4" class="fs-6">4/4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                    <P class="fs-6 m-0">VIN</P>
+                    <div class="d-flex">
+                        <input type="text" class="" id="vin">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="d-flex container">
+
+            <div class="col-md-8 " id="auto">
+                <div class="d-flex col-12">
+                    <div class="col-4 d-flex flex-column  justify-content-center">
+                        <div>
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Reglamentaria</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="bajas"> <label for="bajas">Bajas</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="altas"> <label for="altas">Altas</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="direccionales"> <label for="direccionales">Direccionales</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="auxiliares"> <label for="auxiliares">Auxiliares</label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <input type="checkbox" id="bocina"> <label for="bocina">Bocina</label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center">
+                        <div>
+                            <input type="checkbox" id="reglamentaria2"> <label
+                                for="reglamentaria2">Reglamentaria</label><br>
+                            <input type="checkbox" id="bajas2"> <label for="bajas2">Bajas</label><br>
+                            <input type="checkbox" id="altas2"> <label for="altas2">Altas</label><br>
+                            <input type="checkbox" id="direccionales2"> <label
+                                for="direccionales2">Direccionales</label><br>
+                            <input type="checkbox" id="auxiliares2"> <label for="auxiliares2">Auxiliares</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 d-flex align-items-start">
+                    <div class="mt-2">
+                        <div>
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Pedal de
+                                frenos</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="bajas"> <label for="bajas">Volante</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="altas"> <label for="altas">Pedal de Embrague</label>
+                        </div>
+                        <div class="mt-2">
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Funcionamiento
+                                espejo</label>
+                        </div>
+                        <div class="mt-5">
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Cuadro de
+                                Instrumentos</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Freno de
+                                Estacionamiento</label>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center ">
+                        <img src="./img/vehiculo.jpg" alt="Vehículo" class="img-fluid" width="150px">
+                    </div>
+                    <div class="mt-2">
+                        <div>
+                            <input type="checkbox" id="bajas2"> <label for="bajas2">Limpia parabrisas</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="altas2"> <label for="altas2">Lavaparabrisas</label>
+                        </div>
+                        <div class="mt-4">
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Funcionamiento
+                                espejo</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-flex col-12 ">
+                    <div class="col-4 d-flex flex-column  justify-content-center">
+                        <div>
+                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Reglamentaria</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="bajas"> <label for="bajas">Freno</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="auxiliares"> <label for="auxiliares">Auxiliares</label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center gap-1">
+                            <input type="checkbox" id="bocina"> <label for="bocina">Stop</label>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex flex-column  align-items-ce justify-content-center">
+                        <div>
+                            <input type="checkbox" id="reglamentaria2"> <label
+                                for="reglamentaria2">Reglamentaria</label><br>
+                            <input type="checkbox" id="direccionales2"> <label for="direccionales2">Freno</label><br>
+                            <input type="checkbox" id="auxiliares2"> <label for="auxiliares2">Auxiliares</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Columna derecha -->
+            <div class="col-md-4">
+                <div class="d-flex gap-2">
+                    <div class="col-md-6 " style="font-size: 9px;">
+                        <!-- Detalle interiores -->
+                        <div class="interior-details">
+                            <div class="detail-box mb-3">
+                                <p class="fw-bold"><ins>Aire Acondicionado</ins></p>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Velocidades ventilador</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Salidas por toberas</label>
+                                </div>
+
+                            </div>
+                            <div class="detail-box mb-3">
+                                <p class="fw-bold"><ins>Levanta Cristales:</ins></p>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Delantero Izquierdo</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Delantero Derecho</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Trasero Izquierdo</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Trasero Derecho</label>
+                                </div>
+                            </div>
+                            <div class="detail-box mb-3">
+                                <p class="fw-bold"><ins>Extra:</ins></p>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Cierre centralizado</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Luz de cortesia</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Palanca de Marchas</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna derecha -->
+                    <div class="col-md-6" style="font-size: 9px;">
+                        <div class="other-boxes">
+                            <div class="other-box">
+                                <p class="fw-bold"> <ins>Cinturones de Seguridad:</ins></p>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Delantero Izquierdo</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Delantero Derecho</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Trasero Izquierdo</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Trasero Derecho</label>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span class="toggle-label">
+                                        <span class="switch-background" id="switch-background"></span>
+                                        <span class="switch-toggle" id="switch-toggle"></span>
+                                    </span>
+                                    <label class="mt-2 m-1">Trasero Central</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex flex-column mt-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-start align-items-start me-3">
+                                    <select>
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="100">100%</option>
+                                    </select>
+                                </div>
+
+                                <div class="d-flex justify-content-end align-items-end ">
+                                    <select>
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="100">100%</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="/img/neumaticos.jpg" alt="neumaticos" width="70px">
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-start align-items-start me-3">
+                                    <select>
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="100">100%</option>
+                                    </select>
+                                </div>
+
+                                <div class="d-flex justify-content-end align-items-end">
+                                    <select>
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="100">100%</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="custom-checkbox-group card mt-1 px-2 fs-7">
+                        <p class="fw-bold text fs-6">Estado de frenos</p>
+                        <div class="checkbox-row d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-start">
+                                <p class="d-flex justify-content-start">Pastillas de frenos</p>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox-row d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-start">
+                                <p class="d-flex justify-content-start">Zapata de freno</p>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox-row d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-start">
+                                <label>Caliper</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox-row d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-start">
+                                <label>Cilindro de Freno</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox-row d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-start">
+                                <label>Disco de freno</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox-row d-flex justify-content-between">
+                            <div class="d-flex justify-content-start align-items-start">
+                                <label>Tambor de freno</label>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                                <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                    <input type="checkbox" class="input-switch">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="d-flex justify-content-between mt-2 gap-2 fs-7">
+            <div class="col-4 custom-checkbox-group card px-2">
+                <p class="fw-bold text-center">Niveles de fluidos</p>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Embrague</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Frenos</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Lava parabrisas</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Bateria</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Refrigerante</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Aceite de motor</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 custom-checkbox-group card gap-2">
+                <p class="fw-bold text-center">Correa</p>
+                <div class="checkbox-row d-flex justify-content-around">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Tension</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-around">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Estado</p>
+                    </div>
+                    <div class="d-flex justify-content-end ">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <!-- Agrega aquí más elementos de correa según necesites -->
+            </div>
+            <div class="col-4 custom-checkbox-group card px-2">
+                <p class="fw-bold text-center">Ajustes e inspeccion</p>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Conexiones bateria</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Amortiguadores</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Suspension delantera</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Suspension trasera</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox-row d-flex justify-content-between">
+                    <div class="d-flex justify-content-start align-items-start">
+                        <p class="d-flex justify-content-start">Sistema de escape</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                            <input type="checkbox" class="input-switch">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <form action="">
+                <div class="row">
+                    <div class="col-4">
+                        <label for="cliente">Cliente:</label>
+                        <input type="text" id="cliente" name="cliente">
+                    </div>
+                    <div class="col-4">
+                        <label for="email">E-Mail:</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="col-4">
+                        <label for="dominio">Dominio:</label>
+                        <input type="text" id="dominio" name="dominio">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-4 ">
+                        <label for="marca">Marca:</label>
+                        <input type="text" id="marca" name="marca">
+                    </div>
+                    <div class="col-4">
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" id="modelo" name="modelo">
+                    </div>
+                    <div class="col-4">
+                        <label for="año">Año:</label>
+                        <input type="text" id="año" name="año">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <label for="comentarios">Comentarios:</label><br>
+                        <textarea class="textbox-lines" rows="4"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        function printMe() {
+            window.print()
+        }
+    </script>
+    <script>
+        var elements = document.getElementsByClassName("toggle-label");
+
+        var myFunction = function (e) {
+            e.stopPropagation(); // Evitar la propagación del evento para evitar conflictos
+            let switchLabel = this.getElementsByClassName('switch-toggle')[0];
+            switchLabel.innerHTML = switchLabel.innerHTML === '✔' ? '<span style="color: red;">✘</span>' : '✔';
+            switchLabel.classList.toggle("checked");
+            let switchBackground = this.getElementsByClassName('switch-background')[0];
+            switchBackground.classList.toggle("checked");
+        };
+
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener('click', myFunction, false);
+        }
+
+
+    </script>
+</body>
+
+</html>
