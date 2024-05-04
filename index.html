@@ -31,6 +31,8 @@
         transition: background 150ms linear;
     }
 
+
+
     .switch-toggle {
         position: absolute;
         top: 50%;
@@ -50,28 +52,26 @@
     }
 
     .textbox-lines {
-  width: 100%;
-  max-width: 100%;
-  font-size: 19px;
-  border: none;
-  background-attachment: local;
-  background-image:
-    linear-gradient(to right, #FFF, #FFF 10px, transparent 10px),
-    linear-gradient(to left, #FFF, #FFF 10px, transparent 10px),
-    repeating-linear-gradient(
-      #FFF,
-      #FFF 36px,
-      #CCC 36px,
-      #CCC 38px
-    );
-  line-height: 38px;
-  padding: 6.333px 10px;
-  resize: none;
-}
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
+        border: none;
+        background-attachment: local;
+        background-image:
+            linear-gradient(to right, #FFF, #FFF 10px, transparent 10px),
+            linear-gradient(to left, #FFF, #FFF 10px, transparent 10px),
+            repeating-linear-gradient(#FFF,
+                #FFF 36px,
+                #CCC 36px,
+                #CCC 38px);
+        line-height: 32px;
+        padding: 6.333px 10px;
+        resize: none;
+    }
 
-.textbox-lines:focus-visible {
-    outline: none;
-}
+    .textbox-lines:focus-visible {
+        outline: none;
+    }
 
 
 
@@ -91,6 +91,10 @@
         left: 50px;
     }
 
+    .border-mod{
+        border: none;
+    border-bottom: 1px solid grey;
+    }
     p {
         margin-bottom: 0 !important;
     }
@@ -173,29 +177,29 @@
         font-size: 0.875rem !important;
     }
 
-    .fs-7{
+    .fs-7 {
         font-size: 12.4px;
     }
-    .imglogo{
+
+    .imglogo {
         margin-top: -20px;
-    margin-left: 110px;
-    height: 60px;
-    width: 330px;
-}
-    
+        margin-left: 55px;
+        height: 80px;
+        width: 330px;
+    }
 </style>
 
 <body>
     <main>
 
         <header>
-            <div class="container d-flex justify-content-around">
-                <div class="d-flex justify-content-center align-items-center">
+            <div class="container col-12 d-flex justify-content-around">
+                <div class="d-flex col-6 justify-content-center align-items-center">
                     <img src="./img/logo.png" alt="logo" class="img-fluid imglogo" />
                 </div>
-                <div class=" ">
-                    <h1 class="text-center fs-6">MANTENIMIENTO VEHICULAR</h1>
-                    <h4 class="text-center fs-6">Hoja de Control de Servicio</h4>
+                <div class="col-6 row">
+                    <h1 class="text-center fs-5">MANTENIMIENTO VEHICULAR</h1>
+                    <h4 class="text-center fs-5">Hoja de Control de Servicio</h4>
                 </div>
             </div>
         </header>
@@ -208,7 +212,7 @@
                 <div class="d-flex align-items-center gap-1">
                     <p class="fs-6">FECHA</p>
                     <div class="d-flex align-items-center">
-                        <input type="date" class="" id="anio" placeholder="Año" style="width: 90%;">
+                        <input type="date" class="" id="anio" placeholder="Año" style="width: 90%; border:none; border-bottom: 1px solid grey; ">
                     </div>
                 </div>
 
@@ -216,7 +220,7 @@
                 <div class="d-flex align-items-center gap-1">
                     <p>KM</p>
                     <div class=" d-flex align-items-center">
-                        <input type="text" class="" id="kilometraje">
+                        <input type="text" class="" id="kilometraje" style="border:none; border-bottom: 1px solid grey; ">
                     </div>
                 </div>
 
@@ -224,7 +228,7 @@
                 <div class="d-flex align-items-center gap-1">
                     <p class="fs-6">NAFTA</p>
                     <div class=" d-flex">
-                        <select class="" id="nafta">
+                        <select class="" id="nafta" style="border:none; border-bottom: 1px solid grey; ">
                             <option value="1/4" class="fs-6">1/4</option>
                             <option value="1/2" class="fs-6">1/2</option>
                             <option value="3/4" class="fs-6">3/4</option>
@@ -235,18 +239,19 @@
                 <div class="d-flex align-items-center gap-1">
                     <P class="fs-6 m-0">VIN</P>
                     <div class="d-flex">
-                        <input type="text" class="" id="vin">
+                        <input type="text" class="" id="vin" style="border:none; border-bottom: 1px solid grey; ">
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="d-flex container">
+        <div class="d-flex container mt-2">
 
             <div class="col-md-8 " id="auto">
-                <div class="d-flex col-12">
-                    <div class="col-4 d-flex flex-column  justify-content-center">
+                <div class="d-flex col-12 justify-content-between align-items-end">
+                    <div class="col-4 d-flex flex-column align-items-start justify-content-between card px-2"
+                        style="width:120px;">
                         <div>
                             <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Reglamentaria</label>
                         </div>
@@ -263,68 +268,77 @@
                             <input type="checkbox" id="auxiliares"> <label for="auxiliares">Auxiliares</label>
                         </div>
                     </div>
-                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center">
+                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center card mb-3 px-1"
+                        style="width: 70px; height: 45px;     margin-left: 25px;">
                         <div class="d-flex align-items-center justify-content-center gap-2">
                             <input type="checkbox" id="bocina"> <label for="bocina">Bocina</label>
                         </div>
                     </div>
-                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center">
-                        <div>
-                            <input type="checkbox" id="reglamentaria2"> <label
-                                for="reglamentaria2">Reglamentaria</label><br>
-                            <input type="checkbox" id="bajas2"> <label for="bajas2">Bajas</label><br>
-                            <input type="checkbox" id="altas2"> <label for="altas2">Altas</label><br>
-                            <input type="checkbox" id="direccionales2"> <label
-                                for="direccionales2">Direccionales</label><br>
-                            <input type="checkbox" id="auxiliares2"> <label for="auxiliares2">Auxiliares</label>
-                        </div>
+                    <div class="col-4 d-flex flex-column align-items-end justify-content-end card px-1"
+                        style="width:120px; margin-right: 27px;">
+                        
+                            <div><label for="reglamentaria2">Reglamentaria</label> <input type="checkbox" id="reglamentaria2"></div> 
+                                <div><label for="bajas2">Bajas</label> <input type="checkbox" id="bajas2"> </div>
+                                <div><label for="altas2">Altas</label> <input type="checkbox" id="altas2"> </div>
+                                <div><label for="direccionales2">Direccionales</label><input type="checkbox" id="direccionales2"></div> 
+                                <div><label for="auxiliares2">Auxiliares</label> <input type="checkbox" id="auxiliares2"> </div>
+                        
                     </div>
                 </div>
                 <div class="col-12 d-flex align-items-start">
                     <div class="mt-2">
-                        <div>
-                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Pedal de
-                                frenos</label>
+                        <div class="card mt-2 px-1">
+                            <div>
+                                <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Pedal de
+                                    frenos</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="bajas"> <label for="bajas">Volante</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="altas"> <label for="altas">Pedal de Embrague</label>
+                            </div>
                         </div>
-                        <div>
-                            <input type="checkbox" id="bajas"> <label for="bajas">Volante</label>
+                        <div class=" card mt-2 px-1">
+                            <div class="">
+                                <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Funcionamiento
+                                    espejo</label>
+                            </div>
                         </div>
-                        <div>
-                            <input type="checkbox" id="altas"> <label for="altas">Pedal de Embrague</label>
-                        </div>
-                        <div class="mt-2">
-                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Funcionamiento
-                                espejo</label>
-                        </div>
-                        <div class="mt-5">
-                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Cuadro de
-                                Instrumentos</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Freno de
-                                Estacionamiento</label>
+                        <div class="card mt-4 px-1">
+                            <div class="">
+                                <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Cuadro de
+                                    Instrumentos</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Freno de
+                                    Estacionamiento</label>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center ">
                         <img src="./img/vehiculo.jpg" alt="Vehículo" class="img-fluid" width="150px">
                     </div>
                     <div class="mt-2">
-                        <div>
-                            <input type="checkbox" id="bajas2"> <label for="bajas2">Limpia parabrisas</label>
+                        <div class="card d-flex flex-column align-items-end justify-content-end mt-2 px-2 " style="width: 129px;">
+                            <div>
+                                <label for="bajas2">Limpia parabrisas</label>   <input type="checkbox" id="bajas2">
+                            </div>
+                            <div>
+                                <label for="altas2">Lavaparabrisas</label>      <input type="checkbox" id="altas2"> 
+                            </div>
                         </div>
-                        <div>
-                            <input type="checkbox" id="altas2"> <label for="altas2">Lavaparabrisas</label>
-                        </div>
-                        <div class="mt-4">
-                            <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Funcionamiento
-                                espejo</label>
-                        </div>
+                        <div class="card mt-4 px-1 d-flex flex-column align-items-end justify-content-end">
+                            <div class="">
+                                <label for="reglamentaria">Funcionamiento espejo</label>  <input type="checkbox" id="reglamentaria"> 
+                                </div>
+                            </div>
 
                     </div>
                 </div>
 
-                <div class="d-flex col-12 ">
-                    <div class="col-4 d-flex flex-column  justify-content-center">
+                <div class="d-flex col-12 justify-content-around ">
+                    <div class="col-4 d-flex flex-column  justify-content-between card px-1" style="    width: 110px;">
                         <div>
                             <input type="checkbox" id="reglamentaria"> <label for="reglamentaria">Reglamentaria</label>
                         </div>
@@ -335,12 +349,13 @@
                             <input type="checkbox" id="auxiliares"> <label for="auxiliares">Auxiliares</label>
                         </div>
                     </div>
-                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center">
+                    <div class="col-4 d-flex flex-column  align-items-start justify-content-center card mb-3 me-1 px-2"
+                    style="width: 60px; height: 30px;">
                         <div class="d-flex align-items-center justify-content-center gap-1">
                             <input type="checkbox" id="bocina"> <label for="bocina">Stop</label>
                         </div>
                     </div>
-                    <div class="col-4 d-flex flex-column  align-items-ce justify-content-center">
+                    <div class="col-4 d-flex flex-column  align-items-ce justify-content-center card px-1" style="    width: 110px;">
                         <div>
                             <input type="checkbox" id="reglamentaria2"> <label
                                 for="reglamentaria2">Reglamentaria</label><br>
@@ -549,7 +564,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="custom-checkbox-group card mt-1 px-2 fs-7">
+                    <div class="custom-checkbox-group card mt-1 px-2 pb-1 fs-7">
                         <p class="fw-bold text fs-6">Estado de frenos</p>
                         <div class="checkbox-row d-flex justify-content-between">
                             <div class="d-flex justify-content-start align-items-start">
@@ -653,269 +668,278 @@
 
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="d-flex justify-content-between mt-2 gap-2 fs-7">
-            <div class="col-4 custom-checkbox-group card px-2">
-                <p class="fw-bold text-center">Niveles de fluidos</p>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Embrague</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Frenos</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Lava parabrisas</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Bateria</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Refrigerante</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Aceite de motor</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3 custom-checkbox-group card gap-2">
-                <p class="fw-bold text-center">Correa</p>
-                <div class="checkbox-row d-flex justify-content-around">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Tension</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-around">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Estado</p>
-                    </div>
-                    <div class="d-flex justify-content-end ">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <!-- Agrega aquí más elementos de correa según necesites -->
-            </div>
-            <div class="col-4 custom-checkbox-group card px-2">
-                <p class="fw-bold text-center">Ajustes e inspeccion</p>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Conexiones bateria</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Amortiguadores</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Suspension delantera</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Suspension trasera</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-                <div class="checkbox-row d-flex justify-content-between">
-                    <div class="d-flex justify-content-start align-items-start">
-                        <p class="d-flex justify-content-start">Sistema de escape</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <div class="bg-green d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                        <div class="bg-red d-flex justify-content-center align-items-center me-1">
-                            <input type="checkbox" class="input-switch">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="container">
-            <form action="">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="cliente">Cliente:</label>
-                        <input type="text" id="cliente" name="cliente">
+            <div class="d-flex justify-content-between mt-2 gap-2 fs-7">
+                <div class="col-4 custom-checkbox-group card px-2 pb-1">
+                    <p class="fw-bold text-center">Niveles de fluidos</p>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Embrague</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <label for="email">E-Mail:</label>
-                        <input type="email" id="email" name="email">
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Frenos</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <label for="dominio">Dominio:</label>
-                        <input type="text" id="dominio" name="dominio">
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Lava parabrisas</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Bateria</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Refrigerante</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Aceite de motor</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-4 ">
-                        <label for="marca">Marca:</label>
-                        <input type="text" id="marca" name="marca">
+                <div class="col-3 custom-checkbox-group card gap-2">
+                    <p class="fw-bold text-center">Correa</p>
+                    <div class="checkbox-row d-flex justify-content-around">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Tension</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <label for="modelo">Modelo:</label>
-                        <input type="text" id="modelo" name="modelo">
+                    <div class="checkbox-row d-flex justify-content-around">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Estado</p>
+                        </div>
+                        <div class="d-flex justify-content-end ">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <label for="año">Año:</label>
-                        <input type="text" id="año" name="año">
+                    <!-- Agrega aquí más elementos de correa según necesites -->
+                </div>
+                <div class="col-4 custom-checkbox-group card px-2">
+                    <p class="fw-bold text-center">Ajustes e inspeccion</p>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Conexiones bateria</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Amortiguadores</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Suspension delantera</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Suspension trasera</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkbox-row d-flex justify-content-between">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p class="d-flex justify-content-start">Sistema de escape</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="bg-green d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-yellow d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                            <div class="bg-red d-flex justify-content-center align-items-center me-1">
+                                <input type="checkbox" class="input-switch">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-12">
-                        <label for="comentarios">Comentarios:</label><br>
-                        <textarea class="textbox-lines" rows="4"></textarea>
+            </div>
+            <div class="container mt-2 fs-7">
+                <form action="">
+                    <div class="row  mb-2">
+                        <div class="col-4">
+                            <label for="cliente" >Cliente:</label>
+                            <input type="text" id="cliente" name="cliente" class="border-mod">
+                        </div>
+                        <div class="col-4 d-flex align-items-center gap-1">
+                            <label for="email">E-Mail:</label>
+                            <input type="email" id="email" name="email" style="width: 80%;"class="border-mod">
+                        </div>
+                        <div class="col-4">
+                            <label for="dominio">Dominio:</label>
+                            <input type="text" id="dominio" name="dominio" class="border-mod">
+                        </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="marca">Marca:</label>
+                            <input type="text" id="marca" name="marca" class="border-mod">
+                        </div>
+                        <div class="col-4">
+                            <label for="modelo">Modelo:</label>
+                            <input type="text" id="modelo" name="modelo" class="border-mod">
+                        </div>
+                        <div class="col-4">
+                            <label for="año">Año:</label>
+                            <input type="text" id="año" name="año" class="border-mod">
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="d-flex flex-column">
+                            <div class="col-12 text-center">
+                                <label for="comentarios" class="mt-2 mb-0">Informe:</label>
+                                <textarea class="textbox-lines" rows="4" class="pt-0"></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <label for="comentarios" class="mb-2 ">Observaciones:</label>
+                                <textarea class="textbox-lines" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
             </form>
         </div>
-    </div>
+        </div>
+        <input type="button" value="IMPRIMIR" onclick="printMe()">
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
